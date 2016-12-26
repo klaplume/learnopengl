@@ -15,7 +15,7 @@ if (GLEW_FOUND)
 endif()
 
 # Add OpenGL and GLUT
-find_package(OpenGL REQUIRED)
+find_package(OpenGL 3.3 REQUIRED)
 find_package(GLUT REQUIRED)
 include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
@@ -24,4 +24,4 @@ set(CMAKE_CXX_STANDARD 11)
 set(SOURCE_FILES main.cpp)
 add_executable(${BIN_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${BIN_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} glfw GLEW)
+target_link_libraries(${BIN_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} glfw ${GLEW_LIBRARIES})
