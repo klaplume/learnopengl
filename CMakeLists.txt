@@ -21,7 +21,11 @@ include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp Shader.h)
 add_executable(${BIN_NAME} ${SOURCE_FILES})
+
+# Copy shaders
+configure_file(shaders/default.vert shaders/default.vert COPYONLY)
+configure_file(shaders/default.frag shaders/default.frag COPYONLY)
 
 target_link_libraries(${BIN_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} glfw ${GLEW_LIBRARIES})
