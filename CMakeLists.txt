@@ -24,8 +24,16 @@ set(CMAKE_CXX_STANDARD 11)
 set(SOURCE_FILES main.cpp Shader.h)
 add_executable(${BIN_NAME} ${SOURCE_FILES})
 
+# Add SOIL
+# find_package(soil REQUIRED)
+target_link_libraries(${BIN_NAME} ${CMAKE_SOURCE_DIR}/lib/libSOIL.a)
+
 # Copy shaders
 configure_file(shaders/default.vert shaders/default.vert COPYONLY)
 configure_file(shaders/default.frag shaders/default.frag COPYONLY)
+# Copy textures
+configure_file(textures/wall.jpg textures/wall.jpg COPYONLY)
+configure_file(textures/container.jpg textures/container.jpg COPYONLY)
+configure_file(textures/awesomeface.png textures/awesomeface.png COPYONLY)
 
 target_link_libraries(${BIN_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} glfw ${GLEW_LIBRARIES})
