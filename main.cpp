@@ -12,6 +12,9 @@
 
 #include "SOIL.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // Function prototypes
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -123,8 +126,6 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Activate shader
-        ourShader.Use();
 
         // Bind Textures using texture units
         glActiveTexture(GL_TEXTURE0);
@@ -134,10 +135,36 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture2);
         glUniform1i(glGetUniformLocation(ourShader.Program, "ourTexture2"), 1);
 
-        // Draw container
+        // Activate shader
+        ourShader.Use();
+
+
+        // Create transformations
+        glm::mat4 transform;
+        // First container
+        // =======================
+        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+        transform = glm::rotate(transform, (GLfloat)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+        // Get their uniform location and set matrix
+        GLint transformLoc = glGetUniformLocation(ourShader.Program, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+        // With the uniform matrix set, draw the first container
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        // Second transformation
+        // ===================
+        transform = glm::mat4(); // Reset it to an identity matrix
+        transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
+        GLfloat scaleAmount = sin(glfwGetTime());
+        transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+        // Now with the uniform matrix being replaced with new transformations, draw it again.
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
+
 
         // Swap the screen buffers
         glfwSwapBuffers(window);

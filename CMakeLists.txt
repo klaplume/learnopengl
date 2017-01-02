@@ -28,6 +28,9 @@ add_executable(${BIN_NAME} ${SOURCE_FILES})
 # find_package(soil REQUIRED)
 target_link_libraries(${BIN_NAME} ${CMAKE_SOURCE_DIR}/lib/libSOIL.a)
 
+# Add GLM
+include_directories(${CMAKE_SOURCE_DIR}/lib/glm)
+
 # Copy shaders
 configure_file(shaders/default.vert shaders/default.vert COPYONLY)
 configure_file(shaders/default.frag shaders/default.frag COPYONLY)
