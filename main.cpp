@@ -48,6 +48,7 @@ int main()
     // Define the viewport dimensions
     glViewport(0, 0, WIDTH, HEIGHT);
 
+    glEnable(GL_DEPTH_TEST);
 
     // Build and compile our shader program
     Shader ourShader("shaders/default.vert", "shaders/default.frag");
@@ -178,7 +179,7 @@ int main()
         // Render
         // Clear the colorbuffer
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
         // Bind Textures using texture units
