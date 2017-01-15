@@ -115,6 +115,17 @@ int main()
     SOIL_free_image_data(image2);
     glBindTexture(GL_TEXTURE_2D, 0);
 
+    //MVP Matrices
+    float screenWidth = WIDTH;
+    float screenHeight = HEIGHT;
+    glm::mat4 model;
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    glm::mat4 view;
+    // Note that we're translating the scene in the reverse direction of where we want to move
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    glm::mat4 projection;
+    projection = glm::perspective(glm::radians(45.0f), screenWidth / screenHeight, 0.1f, 100.0f);
+
     // Game loop
     while (!glfwWindowShouldClose(window))
     {
@@ -149,13 +160,21 @@ int main()
         GLint transformLoc = glGetUniformLocation(ourShader.Program, "transform");
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
+        //MVP Matrix
+        GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        GLint projectionLoc = glGetUniformLocation(ourShader.Program, "projection");
+        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
         // With the uniform matrix set, draw the first container
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // Second transformation
         // ===================
-        transform = glm::mat4(); // Reset it to an identity matrix
+        /*transform = glm::mat4(); // Reset it to an identity matrix
         transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
         GLfloat scaleAmount = sin(glfwGetTime());
         transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
@@ -163,8 +182,9 @@ int main()
 
         // Now with the uniform matrix being replaced with new transformations, draw it again.
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
+        */
 
+        glBindVertexArray(0);
 
         // Swap the screen buffers
         glfwSwapBuffers(window);
