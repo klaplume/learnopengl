@@ -21,7 +21,7 @@ include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp Shader.h)
+set(SOURCE_FILES main.cpp Shader.h Camera.h)
 add_executable(${BIN_NAME} ${SOURCE_FILES})
 
 # Add SOIL
