@@ -30,6 +30,9 @@ glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 
 bool keys[1024];
 
+GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
+GLfloat lastFrame = 0.0f;  	// Time of last frame
+
 // The MAIN function, from here we start the application and run the game loop
 int main()
 {
@@ -196,6 +199,10 @@ int main()
     // Game loop
     while (!glfwWindowShouldClose(window))
     {
+        GLfloat currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         // Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
         glfwPollEvents();
         do_movement();
@@ -279,7 +286,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void do_movement()
 {
     // Camera controls
-    GLfloat cameraSpeed = 0.001f;
+    //GLfloat cameraSpeed = 0.001f;
+    GLfloat cameraSpeed = 5.0f * deltaTime;
     if(keys[GLFW_KEY_W])
         cameraPos += cameraSpeed * cameraFront;
     if(keys[GLFW_KEY_S])
