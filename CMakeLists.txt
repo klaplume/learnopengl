@@ -34,6 +34,7 @@ include_directories(${CMAKE_SOURCE_DIR}/lib/glm)
 # Copy shaders
 configure_file(shaders/default.vert shaders/default.vert COPYONLY)
 configure_file(shaders/default.frag shaders/default.frag COPYONLY)
+configure_file(shaders/light.frag shaders/light.frag COPYONLY)
 # Copy textures
 configure_file(textures/wall.jpg textures/wall.jpg COPYONLY)
 configure_file(textures/container.jpg textures/container.jpg COPYONLY)
