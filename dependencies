@@ -1,0 +1,6 @@
+freeglut3-dev
+xorg-dev
+mesa-common-dev
+libgl1-mesa-dev
+glew2
+glfw3
